@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const sqlite3 = require('sqlite3').verbose();
+const jwt = require('jsonwebtoken');
 
 let db = new sqlite3.Database('./webuy.db', sqlite3.OPEN_READWRITE, (err)=>{
     if(err){
@@ -25,6 +26,24 @@ router.get('/', function(req, res) {
 });
 
 router.post('/login', function(req, res) {
+    let auth = req.headers['x-access-token'] || req.headers['authorization'];
+    if(auth && auth.startsWith('Bearer ')){
+        auth = auth.slice(7, auth.length);
+        jwt.verify(auth, 'webuysecret', (err)=>{
+            if(err){
+                return res.status(400).json({
+                    success: false,
+                    message: "Token is not valid or expired"
+                })
+            }else{
+                return res.status(200).json({
+                    success: true,
+                    message: "Token valid and logged in!"
+                })
+            }
+        })
+    }
+
     const username = req.body.username;
     const password = req.body.password;
     if(!username || !password){
@@ -37,7 +56,15 @@ router.post('/login', function(req, res) {
             console.error(err.message);
         }
         if(row){
-            res.status(200).send(`logged in... ${row.username}`);
+            let token = jwt.sign({username: username},
+                'webuysecret',
+                {expiresIn: '24h'}
+                )
+            res.status(200).json({
+                success: true,
+                message: "Successfully logged in!",
+                token: token
+            });
             console.log("Successfully logged in!");
         }else{
             res.status(400).send("Invalid username and password!");
