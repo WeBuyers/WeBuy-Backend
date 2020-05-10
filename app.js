@@ -8,4 +8,4 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use('/auth', authRouter);
 
-app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
+app.listen(port, () => console.log(`App listening at http://localhost:${port}`));
