@@ -29,7 +29,7 @@ router.post('/login', function(req, res) {
     let auth = req.headers['x-access-token'] || req.headers['authorization'];
     if(auth && auth.startsWith('Bearer ')){
         auth = auth.slice(7, auth.length);
-        jwt.verify(auth, 'webuysecret', (err)=>{
+        jwt.verify(auth, 'webuysecret', (err, decoded)=>{
             if(err){
                 return res.status(400).json({
                     success: false,
@@ -38,6 +38,8 @@ router.post('/login', function(req, res) {
             }else{
                 return res.status(200).json({
                     success: true,
+                    user_id: decoded.user_id,
+                    username: decoded.username,
                     message: "Token valid and logged in!"
                 })
             }
@@ -50,19 +52,20 @@ router.post('/login', function(req, res) {
         res.status(400).send("Please enter your username and password.");
         res.end();
     }
-    let sql = `SELECT DISTINCT username, email FROM User WHERE username = ? AND password = ?`;
+    let sql = `SELECT DISTINCT user_id, username, email FROM User WHERE username = ? AND password = ?`;
     db.get(sql, [username, password], (err, row) =>{
         if(err){
             console.error(err.message);
         }
         if(row){
-            let token = jwt.sign({username: username},
+            let token = jwt.sign({username: username, user_id: row.user_id},
                 'webuysecret',
                 {expiresIn: '24h'}
                 )
             res.status(200).json({
                 success: true,
                 message: "Successfully logged in!",
+                user_id: row.user_id,
                 token: token
             });
             console.log("Successfully logged in!");
@@ -90,7 +93,11 @@ router.post('/signup', function (req, res) {
                 if(err){
                     return console.log(err.message);
                 }else{
-                    res.status(200).send(`User ${counter} has been added.`);
+                    res.status(200).json({
+                        success: true,
+                        message: `User ${counter} has been added.`,
+                        user_id: counter
+                    });
                     console.log(`User ${counter} has been added.`);
                     counter++;
                 }
