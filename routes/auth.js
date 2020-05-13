@@ -90,15 +90,16 @@ router.post('/login', function(req, res) {
             password: password
         },
     }).then(user => {
-        if(user){
-            let token = jwt.sign({username: username, user_id: user.user_id},
+        console.log(user[0].dataValues);
+        if(user.length!==0){
+            let token = jwt.sign({username: username, user_id: user[0].dataValues.user_id},
                 'webuysecret',
                 {expiresIn: '24h'}
                 );
             res.status(200).json({
                 success: true,
                 message: "Successfully logged in!",
-                user_id: user.user_id,
+                user_id: user[0].dataValues.user_id,
                 token: token
             });
             console.log("Successfully Login!");
@@ -122,7 +123,6 @@ router.post('/signup', function (req, res) {
             username: username
         }
     }).then(user => {
-        console.log(user);
         if(user.length!==0){
             res.status(201).send("user is already existed");
         }else{
