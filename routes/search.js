@@ -27,6 +27,7 @@ const itemlist = sequelize.define('Items',
         itemname: 'apple',
         picturelink: "good"
     });
+    console.log('------------------------------------------')
 console.log(a.toJSON());
 })(); 
 
