@@ -1,31 +1,61 @@
 const express = require('express');
 const router = express.Router();
-const sqlite3 = require('sqlite3').verbose();
+const Sequelize = require('sequelize');
 const jwt = require('jsonwebtoken');
 
-let db = new sqlite3.Database('./webuy.db', sqlite3.OPEN_READWRITE, (err)=>{
-    if(err){
-        console.error(err.message);
-    }else{
-        console.log("Connected to sqlite db...");
-    }
+const sequelize = new Sequelize({
+    dialect: "sqlite",
+    storage: './webuy.db'
 });
 
-let counter;
-db.get(`SELECT COUNT() AS user_count FROM User`, (err, row)=>{
-    if(err){
-        console.error(err.message);
-    }else{
-        counter = row.user_count;
-        console.log(counter);
+sequelize.authenticate()
+    .then(() => {
+        console.log('Connection has been established successfully.');
+    })
+    .catch(err => {
+        console.error('Unable to connect to the database:', err);
+    });
+
+const User = sequelize.define('User', {
+    user_id: {
+        type: Sequelize.INTEGER,
+        unique: true,
+        allowNull: false,
+        primaryKey: true,
+    },
+    username: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
+    },
+    password: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
+    email: {
+        type: Sequelize.STRING,
+        allowNull: false,
     }
+}, {freezeTableName: true, timestamps: false});
+
+sequelize.sync();
+
+let counter;
+User.count({
+    col: 'user_id',
 })
+    .then(count => {
+        console.log(count);
+        counter = count;
+    }).catch((err)=>{console.error(err.message)});
+
 
 router.get('/', function(req, res) {
     res.send('WeBuy API 1.0');
 });
 
 router.post('/login', function(req, res) {
+    sequelize.sync();
     let auth = req.headers['x-access-token'] || req.headers['authorization'];
     if(auth && auth.startsWith('Bearer ')){
         auth = auth.slice(7, auth.length);
@@ -52,60 +82,66 @@ router.post('/login', function(req, res) {
         res.status(400).send("Please enter your username and password.");
         res.end();
     }
-    let sql = `SELECT DISTINCT user_id, username, email FROM User WHERE username = ? AND password = ?`;
-    db.get(sql, [username, password], (err, row) =>{
-        if(err){
-            console.error(err.message);
-        }
-        if(row){
-            let token = jwt.sign({username: username, user_id: row.user_id},
+
+    User.findAll({
+        attributes: ['user_id', 'username', 'email'],
+        where: {
+            username: username,
+            password: password
+        },
+    }).then(user => {
+        console.log(user[0].dataValues);
+        if(user.length!==0){
+            let token = jwt.sign({username: username, user_id: user[0].dataValues.user_id},
                 'webuysecret',
                 {expiresIn: '24h'}
-                )
+                );
             res.status(200).json({
                 success: true,
                 message: "Successfully logged in!",
-                user_id: row.user_id,
+                user_id: user[0].dataValues.user_id,
                 token: token
             });
-            console.log("Successfully logged in!");
-        }else{
+            console.log("Successfully Login!");
+        }else {
             res.status(400).send("Invalid username and password!");
         }
-        res.end();
+    }).catch(err => {
+        console.error(err.message);
     })
 });
 
 router.post('/signup', function (req, res) {
+    sequelize.sync();
     const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;
 
-    let find = `SELECT DISTINCT username FROM User WHERE username = ?`;
-    let add = `INSERT INTO User(user_id, username, email, password) VALUES(?, ?, ?, ?)`;
-    db.get(find, [username], (err, row)=>{
-        if(err){
-            return console.log(err.message);
+    User.findAll({
+        attributes: ['username'],
+        where:{
+            username: username
         }
-        if(!row){
-            console.log("Adding the account into db...");
-            db.run(add, [counter, username, email, password], (err)=>{
-                if(err){
-                    return console.log(err.message);
-                }else{
-                    res.status(200).json({
-                        success: true,
-                        message: `User ${counter} has been added.`,
-                        user_id: counter
-                    });
-                    console.log(`User ${counter} has been added.`);
-                    counter++;
-                }
-            })
-        }else{
+    }).then(user => {
+        if(user.length!==0){
             res.status(201).send("user is already existed");
+        }else{
+            User.create({
+                username: username,
+                password: password,
+                email: email,
+                user_id: counter
+            }).then(()=>{
+                res.status(200).json({
+                    success: true,
+                    message: `User ${counter} has been added.`,
+                    user_id: counter
+                });
+                console.log(`User ${counter} has been added.`);
+                counter++;
+            });
         }
-    })
+    }).catch((err)=>{console.error(err.message)});
 });
 
 module.exports = router;
