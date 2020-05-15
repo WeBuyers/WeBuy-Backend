@@ -23,7 +23,7 @@ const itemlist = sequelize.define('Items',
 
 (async () => {
     await sequelize.sync();
-    const a = await Itemlist.create({
+    const a = await itemlist.create({
         itemname: 'apple',
         picturelink: "good"
     });
@@ -32,7 +32,7 @@ console.log(a.toJSON());
 
 (async () => {
     await sequelize.sync();
-    const a = await Itemlist.create({
+    const a = await itemlist.create({
         itemname: 'pear',
         picturelink: "bad"
     });
@@ -41,7 +41,7 @@ console.log(a.toJSON());
 
 (async () => {
     await sequelize.sync();
-    const a = await Itemlist.create({
+    const a = await itemlist.create({
         itemname: 'banana',
         picturelink: "git"
     });
@@ -87,7 +87,7 @@ sequelize
 
 //return a list of all items that can be searched
 router.get("/allitem", async function (req, res) {
-    let items = await Itemlist.findAll({
+    let items = await itemlist.findAll({
         attributes: ['itemname', 'picturelink']         
     })
     console.log(items);
@@ -104,7 +104,7 @@ router.get("/allitem", async function (req, res) {
 router.get("/item", async function (req, res) {
     const item = req.query.name;
 
-    const item_wanted = await Itemlist.findOne({where: {itemname: item}});
+    const item_wanted = await itemlist.findOne({where: {itemname: item}});
     if(item_wanted === null){
         console.log('Not Found');
         //send this to front end 
