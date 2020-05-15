@@ -20,6 +20,34 @@ const itemlist = sequelize.define('Items',
     }
 }, {freezeTableName: true, timestamps: false});
 
+
+(async () => {
+    await sequelize.sync();
+    const a = await Itemlist.create({
+        itemname: 'apple',
+        picturelink: "good"
+    });
+console.log(a.toJSON());
+})(); 
+
+(async () => {
+    await sequelize.sync();
+    const a = await Itemlist.create({
+        itemname: 'pear',
+        picturelink: "bad"
+    });
+console.log(a.toJSON());
+})(); 
+
+(async () => {
+    await sequelize.sync();
+    const a = await Itemlist.create({
+        itemname: 'banana',
+        picturelink: "git"
+    });
+console.log(a.toJSON());
+})();
+
 const store = sequelize.define('Stores',
 {
     storename:{
@@ -35,6 +63,7 @@ const store = sequelize.define('Stores',
         allowNull: false
     }
 }, {freezeTableName: true, timestamps: false});
+
 
 const relationship = sequelize.define('Relationships',
 {
@@ -54,25 +83,43 @@ sequelize
         console.log('Connection has been established successfully.');
         return sequelize.sync({ force:true }); 
     })
-    .then(()=>
-        sequelize.close()
-    )
+
 
 //return a list of all items that can be searched
-router.get("/allitem", function (req, res) {
-    {/*TODO*/}
+router.get("/allitem", async function (req, res) {
+    let items = await Itemlist.findAll({
+        attributes: ['itemname', 'picturelink']         
+    })
+    console.log(items);
+    if (items !== null) {
+        
+        res.json(items.map((item)=>item.toJSON()));
+    } else {
+        res.json('Not found');
+    }
+    
 });
 
 //search an item
-router.get("/item", function (req, res) {
+router.get("/item", async function (req, res) {
     const item = req.query.name;
-    {/*TODO*/}
+
+    const item_wanted = await Itemlist.findOne({where: {itemname: item}});
+    if(item_wanted === null){
+        console.log('Not Found');
+        //send this to front end 
+        res.json('Not found');
+    }else{
+        console.log(item_wanted.toJSON()); 
+        //send this to front end 
+        res.json(item_wanted.toJSON());
+    }
 })
 
 //search a list of items
-router.post("/itemlist", function (req, res) {
+router.post("/itemlist", async function (req, res) {
     const items = req.body.items;
-    {/*TODO*/}
+    {/*todo*/}
 })
 
 module.exports = router;
