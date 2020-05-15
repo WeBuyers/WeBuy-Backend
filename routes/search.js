@@ -8,7 +8,7 @@ const sequelize = new Sequelize({
 });
 
 //create the three tables that we need 
-const Itemlist = sequelize.define('Item',
+const itemlist = sequelize.define('Items',
 {
     itemname:{
         type: Sequelize.STRING, 
@@ -18,7 +18,8 @@ const Itemlist = sequelize.define('Item',
         type: Sequelize.STRING,
         allowNull: false
     }
-});
+}, {freezeTableName: true, timestamps: false});
+
 
 (async () => {
     await sequelize.sync();
@@ -48,6 +49,7 @@ console.log(a.toJSON());
 })(); 
 
 const Store = sequelize.define('store',
+
 {
     storename:{
         type: Sequelize.STRING, 
@@ -61,7 +63,7 @@ const Store = sequelize.define('store',
         type: Sequelize.DOUBLE,
         allowNull: false
     }
-});
+}, {freezeTableName: true, timestamps: false});
 
 
 const relationship = sequelize.define('relationship',
@@ -74,7 +76,7 @@ const relationship = sequelize.define('relationship',
         type: Sequelize.STRING,
         allowNull: false
     }
-});
+}, {freezeTableName: true, timestamps: false});
 
 sequelize
     .authenticate()
