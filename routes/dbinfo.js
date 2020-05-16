@@ -109,7 +109,8 @@ sequelize
             latitude:34.0604977,
             longitude: -118.4559502,
             id: 10
+        }).then(async() => {
+            await 
         })
     })
-
 
