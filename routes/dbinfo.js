@@ -48,7 +48,7 @@ sequelize
     .authenticate()
     .then(() => {
         console.log('Connection has been established successfully.');
-        return sequelize.sync({force:true}); 
+        return sequelize.sync({}); 
     }).then(async () => {
         await store.create({
             storename:"Target Westwood",
@@ -109,8 +109,8 @@ sequelize
             latitude:34.0604977,
             longitude: -118.4559502,
             id: 10
-        }).then(async() => {
-            await 
         })
     })
 
+
+    
