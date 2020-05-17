@@ -44,13 +44,14 @@ router.get("/item", async function (req, res) {
                 .then(data =>{
                     if(data.length !== 0){
                         const store_matched = data.dataValues;
-                        items[i].distance = getDistanceFromLatLonInKm(cureent_lat,current_lon,store_matched.latitude,store_matched.longitude);
+                        items[i].distance = getDistanceFromLatLonInKm(current_lat,current_lon,store_matched.latitude,store_matched.longitude);
+                        console.log(items[i]);
                     }
                 }).catch(err=>{console.error(err.message)})
             promise.push(newPromise);
         }
 
-        await Promise.all(promise).then(()=> console.log(items));
+        await Promise.all(promise).then();
 
     }
 
