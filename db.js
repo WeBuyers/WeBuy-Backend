@@ -1,10 +1,8 @@
-const express = require('express');
-const router = express.Router();
 const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize({
    dialect: "sqlite",
-   storage: "../webuy.db"
+   storage: "webuy.db"
 });
 
 //create the three tables that we need 
@@ -44,6 +42,7 @@ const store = sequelize.define('Stores',
     }
 }, {timestamps: false});
 
+/*
 sequelize
     .authenticate()
     .then(() => {
@@ -112,5 +111,8 @@ sequelize
         })
     })
 
+*/
 
-    
+exports["sequelize"] = sequelize
+exports["itemlist"] = itemlist
+exports["store"] = store

@@ -5,10 +5,12 @@ const port = 8000;
 
 const authRouter = require("./routes/auth");
 const searchRouter = require("./routes/search");
+const database = require("./db")
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use('/auth', authRouter);
 app.use('/search', searchRouter);
+
 
 app.listen(port, () => console.log(`App listening at http://localhost:${port}`));
