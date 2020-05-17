@@ -25,45 +25,38 @@ router.get("/item", async function (req, res) {
     const keyword = req.query.name;
     const current_lat = req.query.latitude;
     const current_lon = req.query.longitude;
-
-    let items = await itemlist.findAll()
+    let items = await itemlist.findAll();
     items = items.filter((item) => (
         item.itemname.toLowerCase().includes(keyword.toLowerCase())
     ));
-    items.sort((a, b) => (a.price - b.price)); 
-    
+
+    items = items.map((item)=>{
+        return item.dataValues;
+    });
+
     if(items.length < 1){
         console.log('Not Found');
-        res.json('Not found');
+        res.status(404).send("Not Found");
     }else{
-    let store_id_list = [];
+        let promise = [];
+        for(let i = 0; i < items.length; i++){
+            let newPromise = store.findOne({where:{id: items[i].storeid}})
+                .then(data =>{
+                    if(data.length !== 0){
+                        const store_matched = data.dataValues;
+                        items[i].distance = calculate_distance(current_lat, store_matched.latitude, current_lon, store_matched.longitude);
+                    }
+                }).catch(err=>{console.error(err.message)})
+            promise.push(newPromise);
+        }
 
-    items.forEach(element => {
-        store_id_list.push(element.storeid); 
-    });
+        await Promise.all(promise).then(()=> console.log(items));
 
-    let stores = [];
+    }
 
-    store_id_list.forEach((storeid) => {
-        const store_matched = store.findOne({where: {id: storeid}});
-        stores.push(store_matched);
-    });
-
-    stores = await Promise.all(stores);
-
-    let distance = []
-
-    stores.forEach(element => {
-        distance.push(calculate_distance(current_lat, element.latitude,current_lon, element.longitude)); 
-        element.distance = calculate_distance(current_lat, element.latitude,current_lon, element.longitude); 
-    });
-
-    stores.forEach(element => {
-        console.log(element.toJSON()); 
+    items.sort((a, b) => ((0.4*a.price+0.6/a.distance) - (0.4*b.price+0.6/b.distance)));
+    res.json(items);
     })
-    
-    res.json(items.map((item) => item.toJSON()));
-}})
 
 
 //search a list of items
