@@ -1,12 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Sequelize = require('sequelize');
+const db = require('../db.js');
+const sequelize = db.sequelize;
 const jwt = require('jsonwebtoken');
-
-const sequelize = new Sequelize({
-    dialect: "sqlite",
-    storage: './webuy.db'
-});
 
 sequelize.authenticate()
     .then(() => {
