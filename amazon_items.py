@@ -5,21 +5,24 @@ import csv
 from selenium import webdriver
 import time
 
-NUM_ITEM=20
+NUM_ITEM=30
 URL="https://www.amazon.com/s?i=grocery&rh=n%3A16310101&page="
 def getInfo(html):
     dir_list=[]
     soup=BeautifulSoup(html,features="html.parser")
     # soup=soup.find("div",{"data-test":"productGridContainer"})
     soup=soup.find("div", {"class":"s-result-list s-search-results sg-row"})
-    for div in soup.find_all("div", class_="sg-col-4-of-24 sg-col-4-of-12 sg-col-4-of-36 s-result-item s-asin sg-col-4-of-28 sg-col-4-of-16 sg-col sg-col-4-of-20 sg-col-4-of-32"):
+    for div in soup.find_all("div", class_="sg-col-4-of-24 sg-col-4-of-12 "+ 
+    "sg-col-4-of-36 s-result-item s-asin sg-col-4-of-28 sg-col-4-of-16 sg-col"+ 
+    " sg-col-4-of-20 sg-col-4-of-32"):
         a=div.find_all("a")
         link="www.amazon.com"+a[0]['href']
         name=(link.split('/'))[1]
         try:
             price=div.find("span",class_="a-offscreen").text
         except(AttributeError):
-            pass
+            print("cannot find span")
+            continue
 
         picLinks=div.find("img")['srcset']
         picLink=picLinks.split(' ')[0]
@@ -44,11 +47,11 @@ while(start<=NUM_ITEM):
     URL=URL+str(start)
     driver.get(URL)
     print(URL)
-    time.sleep(0.5)
-    for i in range(0,10):
-        driver.execute_script("window.scrollTo(0,{}*document.body.scrollHeight/10);".format(i))
-        time.sleep(0.5)
-    time.sleep(0.5)
+    time.sleep(0.1)
+    for i in range(0,3):
+        driver.execute_script("window.scrollTo(0,{}*document.body.scrollHeight/3);".format(i))
+        time.sleep(0.1)
+    time.sleep(0.1)
     page_html=driver.page_source
 
     itemlist=getInfo(page_html)
