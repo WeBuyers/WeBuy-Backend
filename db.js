@@ -50,8 +50,8 @@ const store = sequelize.define('Stores',
 
 const wishlist = sequelize.define('Wishlists',
 {
-    username:{
-        type: Sequelize.STRING, 
+    user_id:{
+        type: Sequelize.INTEGER,
         allowNull: false,
     },
     item_id: {

@@ -3,34 +3,35 @@ const router = express.Router();
 const db = require('../db.js');
 const sequelize = db.sequelize;
 const wishlist = db.wishlist;
+const itemlist = db.itemlist;
 const jwt = require('jsonwebtoken');
 module.exports = router;
 
 
-router.use(':username', (req, res, next) => {
-    //TODO authentication
-    try {
-        const username = req.param.username;
-        const token = req.cookies.jwt;
-        if (username === null || token === null) throw new Error();
-        const decoded = jwt.verify(token, 'webuysecret');
-        if (decoded.username != username) throw new Error();
-    } catch (e) {
-        res.status(401).send("Unauthorized");
-        return;
-    }
-    next();
-})
-
-router.get('/:username', async (req, res, next) => {
-    const username = req.params.username;
+router.get('/listall', async (req, res, next) => {
+    const userid = req.query.user_id;
     //search the wishlist table
     let items = await wishlist.findAll({
-        where: {username: username},
+        where: {user_id: userid},
         attributes: ['item_id']
     });
+    Promise.all(items);
     if (items !== null) {
-        res.json(items.map(e => e.dataValues.item_id));
+        let list = [];
+        let result = [];
+        for(let i = 0; i < items.length; i++){
+            let newPromise = itemlist.findOne({where:{id: items[i].dataValues.item_id}})
+                .then(data=> {
+                    console.log(data.dataValues.itemname);
+                    result.push(data.dataValues.itemname);
+                    //console.log(result);
+                })
+                .catch(err=>{console.error(err.message)});
+            list.push(newPromise);
+        }
+        await Promise.all(list);
+        res.json(result);
+
     } else {
         res.json([]);
     }
