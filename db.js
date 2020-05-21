@@ -13,7 +13,7 @@ const itemlist = sequelize.define('Items',
         unique: true,
         allowNull: false,
         primaryKey: true,
-    }
+    },
     itemname:{
         type: Sequelize.STRING, 
         allowNull: false
