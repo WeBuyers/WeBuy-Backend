@@ -87,7 +87,7 @@ router.post('/login', function(req, res) {
             password: password
         },
     }).then(user => {
-        console.log(user[0].dataValues);
+        console.log(user);
         if(user.length!==0){
             let token = jwt.sign({username: username, user_id: user[0].dataValues.user_id},
                 'webuysecret',
