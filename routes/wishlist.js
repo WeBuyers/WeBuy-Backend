@@ -23,7 +23,7 @@ router.get('/listall', async (req, res, next) => {
             let newPromise = itemlist.findOne({where:{id: items[i].dataValues.item_id}})
                 .then(data=> {
                     console.log(data.dataValues.itemname);
-                    result.push(data.dataValues.itemname);
+                    result.push({name: data.dataValues.itemname, id: data.dataValues.id});
                     //console.log(result);
                 })
                 .catch(err=>{console.error(err.message)});
@@ -66,13 +66,13 @@ router.post('/additem', async (req, res, next) => {
 });
 
 
-router.delete('/:username/:item_id', async (req, res, next) => {
+router.delete('/deleteitem', async (req, res, next) => {
     
-    const username = req.params.username;
-    const item_id = req.params.item_id;
+    const user_id = req.body.user_id;
+    const item_id = req.body.item_id;
 
     wishlist.destroy({where: {
-        username: username,
+        user_id: user_id,
         item_id: item_id,
     }})
     .then((a)=>{
