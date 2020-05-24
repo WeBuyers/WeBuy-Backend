@@ -8,6 +8,12 @@ const sequelize = new Sequelize({
 //create the three tables that we need 
 const itemlist = sequelize.define('Items',
 {
+    id:{
+        type: Sequelize.INTEGER,
+        unique: true,
+        allowNull: false,
+        primaryKey: true,
+    }
     itemname:{
         type: Sequelize.STRING, 
         allowNull: false
@@ -41,6 +47,20 @@ const store = sequelize.define('Stores',
         allowNull: false
     }
 }, {timestamps: false});
+
+const wishlist = sequelize.define('Wishlists',
+{
+    username:{
+        type: Sequelize.STRING, 
+        allowNull: false,
+    },
+    item_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+
+    }
+}, {timestamps: false});
+
 
 /*
 sequelize
@@ -116,3 +136,4 @@ sequelize
 exports["sequelize"] = sequelize
 exports["itemlist"] = itemlist
 exports["store"] = store
+exports["wishlist"] = wishlist
