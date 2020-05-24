@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use('/auth', authRouter);
 app.use('/search', searchRouter);
-app.use('/wishlist', wishlistRouter);
+// app.use('/wishlist', wishlistRouter);
 
 
 app.listen(port, () => console.log(`App listening at http://localhost:${port}`));
