@@ -38,15 +38,15 @@ router.get('/listall', async (req, res, next) => {
 
 });
 
-router.post('/:username/:item_id', async (req, res, next) => {
+router.post('/additem', async (req, res, next) => {
 
-    const username = req.params.username;
-    const item_id = req.params.item_id;
+    const user_id = req.body.user_id;
+    const item_id = req.body.item_id;
     // add the wishlist table
     wishlist.findAll({
-        attributes: ['username', 'item_id'],
+        attributes: ['user_id', 'item_id'],
         where:{
-            username: username,
+            user_id: user_id,
             item_id: item_id,
         }
     }).then(items => {
@@ -54,11 +54,11 @@ router.post('/:username/:item_id', async (req, res, next) => {
             res.status(400).send("Item is already in the wishlist");
         }else{
             wishlist.create({
-                username: username,
+                user_id: user_id,
                 item_id: item_id,
             }).then(()=>{
                 console.log(`Item has been added to the wishlist.`);
-                res.status(201).send(`Item has been added to the wishlist.`);
+                res.status(200).send(`Item has been added to the wishlist.`);
             });
         }
     }).catch((err)=>{console.error(err.message)});
