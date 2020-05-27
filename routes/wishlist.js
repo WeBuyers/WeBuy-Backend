@@ -10,6 +10,12 @@ module.exports = router;
 
 router.get('/listall', async (req, res, next) => {
     const userid = req.query.user_id;
+
+    if (userid === undefined) {
+        res.status(400).send("Cannot find user id.")
+        return
+    }
+
     //search the wishlist table
     let items = await wishlist.findAll({
         where: {user_id: userid},
@@ -42,6 +48,13 @@ router.post('/additem', async (req, res, next) => {
 
     const user_id = req.body.user_id;
     const item_id = req.body.item_id;
+
+    if (user_id === undefined || item_id === undefined) {
+        res.status(400).send("Cannot find user id or item id.")
+        return
+    }
+
+
     // add the wishlist table
     wishlist.findAll({
         attributes: ['user_id', 'item_id'],
@@ -70,6 +83,11 @@ router.delete('/deleteitem', async (req, res, next) => {
     
     const user_id = req.body.user_id;
     const item_id = req.body.item_id;
+
+    if (user_id === undefined || item_id === undefined) {
+        res.status(400).send("Cannot find user id or item id.")
+        return
+    }
 
     wishlist.destroy({where: {
         user_id: user_id,
