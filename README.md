@@ -16,9 +16,9 @@ npm start
 ```
 
 ## Example
-The app will be listened at localhost:8000 
+The app will be listened at localhost:8000  
 To see the full list of available items to be searched:  
-localhost:8000/search/allitem
+http://localhost:8000/search/allitem  
 To see the wishlist of a certain user with user_id value:  
 http://localhost:8000/wishlist/listall?user_id=value  
 To add an item to the wishlist with user_id value:  
