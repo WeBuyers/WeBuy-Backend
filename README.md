@@ -140,7 +140,7 @@ Response:
 
 {  
  {  
-        "id": “item_id_1”,  
+      &nbsp;  "id": “item_id_1”,  
         "itemname": "item_name_1",  
         "picturelink": "https://item_1.jpg",  
         "storeid": number_1,  
