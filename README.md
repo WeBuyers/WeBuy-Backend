@@ -81,8 +81,8 @@ Request:
 ```json
 {
   "items": ["item1","item2",...,"item_n"],
-	"latitude": your latitude (double), 
-	"longitude": your longitude (double)
+	"latitude": your_latitude_(double), 
+	"longitude": your_longitude_(double)
 }
 ```
 Response: 
@@ -130,8 +130,8 @@ Request:
 ```json
 {
   "items": "keyword",
-	"latitude": your latitude (double), 
-	"longitude": your longitude (double)
+	"latitude": your_latitude_(double), 
+	"longitude": your_longitude_(double)
 }
 ```
 Response: 
@@ -154,6 +154,7 @@ Response:
         "price": item_price_n,
         "distance": a number
     }
+ }
 ```
 
 
