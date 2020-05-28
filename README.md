@@ -80,12 +80,12 @@ You need to use post method and encode the infomation in the body.
 Request:
 ```json
 {
-  "items": ["item1","item2",...,"item_n"],
-	"latitude": your_latitude_(double), 
-	"longitude": your_longitude_(double)
+  "items": "["item1","item2",...,"item_n"]",
+	"latitude": "your_latitude_(double)", 
+	"longitude": "your_longitude_(double)"
 }
 ```
-Response: 
+Response: It should contain a list of the following 
 
 ```json
 {
@@ -94,35 +94,20 @@ Response:
         {
             "id": storeid_1,
             "storename": "xxx1",
-            "latitude": store_latitude(double),
-            "longitude": store_longitude(double) 
+            "latitude": "store_latitude(double)",
+            "longitude": store_longitude(double)" 
         },
         {
             "id": itemid1,
             "itemname": "item_name1",
             "picturelink": "https://itempicture.jpg",
-            "storeid": storeid_1,
-            "price": item_price
+            "storeid": "storeid_1",
+            "price": "item_price"
         }
-    ],
-    ...
-    [
-        {
-            "id": storeid_n,
-            "storename": "xxx_n",
-            "latitude": store_latitude(double),
-            "longitude": store_longitude(double) 
-        },
-        {
-            "id": itemid_n,
-            "itemname": "item_name_N",
-            "picturelink": "https://itempicture..jpg",
-            "storeid": storeid_n,
-            "price": item_price
-        }
-    ],
-   ]
+    ]
+  ]
 }
+   
 ```
 4.Item
 The url is ```http://localhost:8000/search/item?name=keyword&latitude=num1&longitude=num2```
@@ -130,8 +115,8 @@ Request:
 ```json
 {
   "items": "keyword",
-	"latitude": your_latitude_(double), 
-	"longitude": your_longitude_(double)
+	"latitude": "your_latitude_(double)", 
+	"longitude": "your_longitude_(double)"
 }
 ```
 Response: 
@@ -142,17 +127,17 @@ Response:
         "id": item_id_1,
         "itemname": "item_name_1",
         "picturelink": "https://item_1.jpg",
-        "storeid": number_1,
-        "price": item_price_1,
-        "distance": a number
+        "storeid": "number_1",
+        "price": "item_price_1",
+        "distance": "a number"
     },
    {
         "id": item_id_n,
         "itemname": "item_name_n",
         "picturelink": "https://item_n.jpg",
-        "storeid": number_n,
-        "price": item_price_n,
-        "distance": a number
+        "storeid": "number_n",
+        "price": "item_price_n",
+        "distance": "a number"
     }
  }
 ```
