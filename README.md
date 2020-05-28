@@ -54,7 +54,14 @@ Status: 400 Bad Request
 Invalid username and password!
 ```
 
-2.Allitem
+Example of signup:
+<img src="https://github.com/WeBuyers/WeBuy-Backend/blob/master/screenshot/signup.jpg">
+
+Example of login:
+<img src="https://github.com/WeBuyers/WeBuy-Backend/blob/master/screenshot/login.jpg">
+
+
+2.Allitem  
 Url path: ```http://localhost:8000/search/allitem```
 
 Response: a list of all the items that could be searched
@@ -73,7 +80,7 @@ Response: a list of all the items that could be searched
 Example is like this: <img src="https://github.com/WeBuyers/WeBuy-Backend/blob/master/screenshot/allitem.jpg">
 
 
-3.Itemlist
+3.Itemlist  
 Url path: ```http://localhost:8000/itemlist```
 
 You need to use post method and encode the infomation in the body. 
