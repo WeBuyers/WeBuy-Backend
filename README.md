@@ -138,24 +138,24 @@ Request:
 Response: 
 
 
-{
- {
-        "id": “item_id_1”,
-        "itemname": "item_name_1",
-        "picturelink": "https://item_1.jpg",
-        "storeid": number_1,
-        "price": item_price_1,
-        "distance": a number
-    },...
-   {
-        "id": item_id_n,
-        "itemname": "item_name_n",
-        "picturelink": "https://item_n.jpg",
-        "storeid": number_n,
-        "price": item_price_n,
-        "distance": a number
-    }
- }
+{  
+ {  
+        "id": “item_id_1”,  
+        "itemname": "item_name_1",  
+        "picturelink": "https://item_1.jpg",  
+        "storeid": number_1,  
+        "price": item_price_1,  
+        "distance": a number  
+    },...  
+   {  
+        "id": item_id_n,  
+        "itemname": "item_name_n",  
+        "picturelink": "https://item_n.jpg",  
+        "storeid": number_n,  
+        "price": item_price_n,  
+        "distance": a number  
+    }  
+ }  
  
  Example is like: <img src="https://github.com/WeBuyers/WeBuy-Backend/blob/master/screenshot/itemkeyword.jpg">
 
