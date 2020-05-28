@@ -65,8 +65,8 @@ Response: a list of all the items that could be searched
         "picturelink": "https://xxx_1.jpg"  
     },...  
     {  
-     "itemname": "xxx_1",  
-        "picturelink": "https://xxx_1.jpg"  
+     "itemname": "xxx_n",  
+        "picturelink": "https://xxx_n.jpg"  
     }  
 }  
 ```
@@ -82,8 +82,8 @@ Request:
 ```
 {  
   "items": "["item1","item2",...,"item_n"]",  
-	"latitude": "your_latitude_(double)",   
-	"longitude": "your_longitude_(double)"  
+	"latitude": your_latitude_(double),   
+	"longitude": your_longitude_(double) 
 }  
 ```
 Response: It should contain a list of the following   
@@ -95,30 +95,30 @@ Response: It should contain a list of the following
         {  
             "id": storeid_1,  
             "storename": "xxx1",  
-            "latitude": "store_latitude(double)",  
-            "longitude": store_longitude(double)"   
+            "latitude": store_latitude(double),  
+            "longitude": store_longitude(double)
         },  
         {  
-            "id": itemid1,  
+            "id": itemid_1,  
             "itemname": "item_name1",  
             "picturelink": "https://itempicture.jpg",  
-            "storeid": "storeid_1",  
-            "price": "item_price"  
+            "storeid": storeid_1,  
+            "price": item_price  
         }  
     ],...  
     [  
         {  
             "id": storeid_n,  
             "storename": "xxxn",  
-            "latitude": "store_latitude(double)",  
-            "longitude": store_longitude(double)"   
+            "latitude": store_latitude(double),  
+            "longitude": store_longitude(double)   
         },  
         {  
-            "id": itemidn,  
+            "id": itemid_n,  
             "itemname": "item_namen",  
             "picturelink": "https://itempicture.jpg",  
-            "storeid": "storeid_n",  
-            "price": "item_price"  
+            "storeid": storeid_n,  
+            "price": item_price
         }  
     ]  
   ]  
