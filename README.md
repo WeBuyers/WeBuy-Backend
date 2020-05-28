@@ -59,14 +59,19 @@ Url path: ```http://localhost:8000/search/allitem```
 
 Response: a list of all the items that could be searched
 
-```json
 [
     {
         "itemname": "xxx_1",
         "picturelink": "https://xxx_1.jpg"
+    },...
+    {
+     "itemname": "xxx_1",
+        "picturelink": "https://xxx_1.jpg"
     }
 }
-```
+
+Example is like this: 
+
 
 3.Itemlist
 Url path: ```http://localhost:8000/itemlist```
@@ -100,6 +105,21 @@ Response: It should contain a list of the following
             "storeid": "storeid_1",
             "price": "item_price"
         }
+    ],...
+    [
+        {
+            "id": storeid_n,
+            "storename": "xxxn",
+            "latitude": "store_latitude(double)",
+            "longitude": store_longitude(double)" 
+        },
+        {
+            "id": itemidn,
+            "itemname": "item_namen",
+            "picturelink": "https://itempicture.jpg",
+            "storeid": "storeid_n",
+            "price": "item_price"
+        }
     ]
   ]
 }
@@ -108,35 +128,36 @@ Response: It should contain a list of the following
 4.Item
 The url is ```http://localhost:8000/search/item?name=keyword&latitude=num1&longitude=num2```
 Request:
-```json
+
 {
   "items": "keyword",
-  "latitude": "your_latitude_(double)", 
-  "longitude": "your_longitude_(double)"
+  "latitude": your_latitude_(double), 
+  "longitude": your_longitude_(double)
 }
-```
+
 Response: 
 
-```json
+
 {
  {
         "id": “item_id_1”,
         "itemname": "item_name_1",
         "picturelink": "https://item_1.jpg",
-        "storeid": "number_1",
-        "price": "item_price_1",
-        "distance": "a number"
-    },
+        "storeid": number_1,
+        "price": item_price_1,
+        "distance": a number
+    },...
    {
-        "id": "item_id_n”,
+        "id": item_id_n,
         "itemname": "item_name_n",
         "picturelink": "https://item_n.jpg",
-        "storeid": "number_n",
-        "price": "item_price_n",
-        "distance": "a number"
+        "storeid": number_n,
+        "price": item_price_n,
+        "distance": a number
     }
  }
-```
+ 
+ Example is like: <img src="https://github.com/WeBuyers/WeBuy-Backend/blob/master/screenshot/itemkeyword.jpg" width="400" height="850" alt="alt text">
 
 
 
