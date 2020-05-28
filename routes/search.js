@@ -67,7 +67,9 @@ router.post("/itemlist", async function (req, res) {
     const current_lon = req.body.longitude;
     let store_destination = []
    
-    //search the items and their corresponding stores 
+    //search the items and their corresponding stores
+    console.log(items);
+    console.log(current_lat);
     for(let i = 0; i<items.length; i++) {
         console.log(items[i]);
         let item = await itemlist.findOne({where:{itemname: items[i]}});

@@ -16,30 +16,44 @@ Installation and Configuration
 
 Environment Setup
 ---
-run 
-```
-npm install 
-```
+run ```npm install``` or ```yarn install```
 
 Usage
 ---
+start the app
 ```
-npm start
+node app
+```
+The syntax of responses and requests for each api is 
+described as following:
+
+1. Login
+
+Url path: ```http://localhost:8000/auth/login```
+
+Request:
+```json
+{
+  "username": "your username",
+  "password": "your password"
+}
+```
+Response: 
+
+status: 200 OK
+```json
+{
+  "success": true,
+  "message": "Successfully Logged in!",
+  "user_id": "the corresponding user_id",
+  "token": "the auth token"
+}
+```
+Status: 400 Bad Request
+```
+Invalid username and password!
 ```
 
-Example
----
-The app will be listened at localhost:8000 by default. And you could also download Postman from [here](https://www.postman.com/) to use it to run the backend code. 
-
-To see the full list of available items to be searched:  
-http://localhost:8000/search/allitem  
-You don't need to send any request to the website and by using the get method, the website would return you all the 500 items that can be searched. 
-
-To see a list of items containing the search keywrods 
-
-
-To see the wishlist of a certain user with user_id id:  
-http://localhost:8000/wishlist/listall?user_id=id  
 
 
 
