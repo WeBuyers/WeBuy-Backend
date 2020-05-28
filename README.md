@@ -157,7 +157,7 @@ Response:
     }
  }
  
- Example is like: <img src="https://github.com/WeBuyers/WeBuy-Backend/blob/master/screenshot/itemkeyword.jpg" width="400" height="850" alt="alt text">
+ Example is like: <img src="https://github.com/WeBuyers/WeBuy-Backend/blob/master/screenshot/itemkeyword.jpg">
 
 
 
