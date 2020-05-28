@@ -58,7 +58,7 @@ Invalid username and password!
 Url path: ```http://localhost:8000/search/allitem```
 
 Response: a list of all the items that could be searched
-
+```
 {  
     {  
         "itemname": "xxx_1",  
@@ -69,7 +69,7 @@ Response: a list of all the items that could be searched
         "picturelink": "https://xxx_1.jpg"  
     }  
 }  
-
+```
 Example is like this: <img src="https://github.com/WeBuyers/WeBuy-Backend/blob/master/screenshot/allitem.jpg">
 
 
@@ -79,16 +79,16 @@ Url path: ```http://localhost:8000/itemlist```
 You need to use post method and encode the infomation in the body. 
 
 Request:
-
+```
 {  
   "items": "["item1","item2",...,"item_n"]",  
 	"latitude": "your_latitude_(double)",   
 	"longitude": "your_longitude_(double)"  
 }  
-
+```
 Response: It should contain a list of the following   
 
-
+```
 {  
   [  
     [  
@@ -123,7 +123,7 @@ Response: It should contain a list of the following
     ]  
   ]  
 }  
-
+```
  Example is like: <img src="https://github.com/WeBuyers/WeBuy-Backend/blob/master/screenshot/itemlist.jpg">
 
    
@@ -131,16 +131,16 @@ Response: It should contain a list of the following
 4.Item
 The url is ```http://localhost:8000/search/item?name=keyword&latitude=num1&longitude=num2```
 Request:
-
+```
 {
   "items": "keyword",
   "latitude": your_latitude_(double), 
   "longitude": your_longitude_(double)
 }
-
+```
 Response: 
 
-
+```
 {  
  {  
       &nbsp;  "id": “item_id_1”,  
@@ -159,7 +159,7 @@ Response:
         "distance": a number  
     }  
  }  
- 
+``` 
  Example is like: <img src="https://github.com/WeBuyers/WeBuy-Backend/blob/master/screenshot/itemkeyword.jpg">
 
 
