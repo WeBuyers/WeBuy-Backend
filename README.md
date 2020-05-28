@@ -59,19 +59,15 @@ Url path: ```http://localhost:8000/search/allitem```
 
 Response: a list of all the items that could be searched
 
-status: 200 OK
 ```json
 [
     {
         "itemname": "xxx_1",
         "picturelink": "https://xxx_1.jpg"
-    },...
-    {
-        "itemname": "xxx_n",
-        "picturelink": "https://xxx_n.jpg"
     }
 }
 ```
+
 3.Itemlist
 Url path: ```http://localhost:8000/itemlist```
 
@@ -115,8 +111,8 @@ Request:
 ```json
 {
   "items": "keyword",
-	"latitude": "your_latitude_(double)", 
-	"longitude": "your_longitude_(double)"
+  "latitude": "your_latitude_(double)", 
+  "longitude": "your_longitude_(double)"
 }
 ```
 Response: 
@@ -124,7 +120,7 @@ Response:
 ```json
 {
  {
-        "id": item_id_1,
+        "id": “item_id_1”,
         "itemname": "item_name_1",
         "picturelink": "https://item_1.jpg",
         "storeid": "number_1",
@@ -132,7 +128,7 @@ Response:
         "distance": "a number"
     },
    {
-        "id": item_id_n,
+        "id": "item_id_n”,
         "itemname": "item_name_n",
         "picturelink": "https://item_n.jpg",
         "storeid": "number_n",
