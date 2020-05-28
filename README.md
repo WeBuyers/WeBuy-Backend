@@ -54,6 +54,107 @@ Status: 400 Bad Request
 Invalid username and password!
 ```
 
+2.Allitem
+Url path: ```http://localhost:8000/search/allitem```
+
+Response: a list of all the items that could be searched
+
+status: 200 OK
+```json
+[
+    {
+        "itemname": "xxx_1",
+        "picturelink": "https://xxx_1.jpg"
+    },...
+    {
+        "itemname": "xxx_n",
+        "picturelink": "https://xxx_n.jpg"
+    }
+}
+```
+3.Itemlist
+Url path: ```http://localhost:8000/itemlist```
+
+You need to use post method and encode the infomation in the body. 
+
+Request:
+```json
+{
+  "items": ["item1","item2",...,"item_n"],
+	"latitude": your latitude (double), 
+	"longitude": your longitude (double)
+}
+```
+Response: 
+
+```json
+{
+  [
+    [
+        {
+            "id": storeid_1,
+            "storename": "xxx1",
+            "latitude": store_latitude(double),
+            "longitude": store_longitude(double) 
+        },
+        {
+            "id": itemid1,
+            "itemname": "item_name1",
+            "picturelink": "https://itempicture.jpg",
+            "storeid": storeid_1,
+            "price": item_price
+        }
+    ],
+    ...
+    [
+        {
+            "id": storeid_n,
+            "storename": "xxx_n",
+            "latitude": store_latitude(double),
+            "longitude": store_longitude(double) 
+        },
+        {
+            "id": itemid_n,
+            "itemname": "item_name_N",
+            "picturelink": "https://itempicture..jpg",
+            "storeid": storeid_n,
+            "price": item_price
+        }
+    ],
+   ]
+}
+```
+4.Item
+The url is ```http://localhost:8000/search/item?name=keyword&latitude=num1&longitude=num2```
+Request:
+```json
+{
+  "items": "keyword",
+	"latitude": your latitude (double), 
+	"longitude": your longitude (double)
+}
+```
+Response: 
+
+```json
+{
+ {
+        "id": item_id_1,
+        "itemname": "item_name_1",
+        "picturelink": "https://item_1.jpg",
+        "storeid": number_1,
+        "price": item_price_1,
+        "distance": a number
+    },
+   {
+        "id": item_id_n,
+        "itemname": "item_name_n",
+        "picturelink": "https://item_n.jpg",
+        "storeid": number_n,
+        "price": item_price_n,
+        "distance": a number
+    }
+```
 
 
 
