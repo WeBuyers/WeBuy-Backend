@@ -1,12 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Sequelize = require('sequelize');
+const db = require('../db.js');
+const sequelize = db.sequelize;
 const jwt = require('jsonwebtoken');
-
-const sequelize = new Sequelize({
-    dialect: "sqlite",
-    storage: './webuy.db'
-});
 
 sequelize.authenticate()
     .then(() => {
@@ -90,7 +87,7 @@ router.post('/login', function(req, res) {
             password: password
         },
     }).then(user => {
-        console.log(user[0].dataValues);
+        console.log(user);
         if(user.length!==0){
             let token = jwt.sign({username: username, user_id: user[0].dataValues.user_id},
                 'webuysecret',
