@@ -97,7 +97,8 @@ router.post('/login', function(req, res) {
                 success: true,
                 message: "Successfully logged in!",
                 user_id: user[0].dataValues.user_id,
-                token: token
+                token: token,
+                email: user[0].dataValues.email,
             });
             console.log("Successfully Login!");
         }else {
