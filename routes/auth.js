@@ -67,6 +67,7 @@ router.post('/login', function(req, res) {
                     success: true,
                     user_id: decoded.user_id,
                     username: decoded.username,
+                    email: decoded.email,
                     message: "Token valid and logged in!"
                 })
             }
@@ -89,7 +90,8 @@ router.post('/login', function(req, res) {
     }).then(user => {
         console.log(user);
         if(user.length!==0){
-            let token = jwt.sign({username: username, user_id: user[0].dataValues.user_id},
+            let token = jwt.sign(
+                {username: username, user_id: user[0].dataValues.user_id, email: user[0].dataValues.email},
                 'webuysecret',
                 {expiresIn: '24h'}
                 );
@@ -97,7 +99,8 @@ router.post('/login', function(req, res) {
                 success: true,
                 message: "Successfully logged in!",
                 user_id: user[0].dataValues.user_id,
-                token: token
+                token: token,
+                email: user[0].dataValues.email,
             });
             console.log("Successfully Login!");
         }else {
