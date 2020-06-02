@@ -63,13 +63,11 @@ router.post('/login', function(req, res) {
                     message: "Token is not valid or expired"
                 })
             }else{
-                let user = User.findOne({where: username});
-                email = user.email;
                 return res.status(200).json({
                     success: true,
                     user_id: decoded.user_id,
-                    username: username,
-                    email: email,
+                    username: decoded.username,
+                    email: decoded.email,
                     message: "Token valid and logged in!"
                 })
             }
@@ -92,7 +90,8 @@ router.post('/login', function(req, res) {
     }).then(user => {
         console.log(user);
         if(user.length!==0){
-            let token = jwt.sign({username: username, user_id: user[0].dataValues.user_id},
+            let token = jwt.sign(
+                {username: username, user_id: user[0].dataValues.user_id, email: user[0].dataValues.email},
                 'webuysecret',
                 {expiresIn: '24h'}
                 );
