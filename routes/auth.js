@@ -63,10 +63,13 @@ router.post('/login', function(req, res) {
                     message: "Token is not valid or expired"
                 })
             }else{
+                let user = User.findOne({where: username});
+                email = user.email;
                 return res.status(200).json({
                     success: true,
                     user_id: decoded.user_id,
-                    username: decoded.username,
+                    username: username,
+                    email: email,
                     message: "Token valid and logged in!"
                 })
             }
