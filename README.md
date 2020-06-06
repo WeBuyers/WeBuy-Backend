@@ -12,7 +12,7 @@ Installation and Configuration
 1. Clone the repository.
 2. Install node.js from the [official website](https://nodejs.org/en/).
 3. Download npm JavaScript Package Manager using [this instruction](https://www.npmjs.com/get-npm).
-4. Install [Expo Cli](https://docs.expo.io/workflow/expo-cli/) using npm. 
+4. Run package.json by type ```npm install``` or ```yarn install``` to install all packages.
 
 Environment Setup
 ---
@@ -25,7 +25,7 @@ start the app
 node app
 ```
 The syntax of responses and requests for each api is 
-described as following:
+described as following (use postman to test these apis):
 
 1. Login
 
@@ -169,7 +169,9 @@ Response:
 ``` 
  Example is like: <img src="https://github.com/WeBuyers/WeBuy-Backend/blob/master/screenshot/itemkeyword.jpg">
 
-
+Note: The images may not shown directly from this README since our repo is private and they are displayed
+only on the github website. If you want to see the demo pictures, go and check the screenshot directory.
+Same for the frontend repository.
 
 
 
